@@ -28,7 +28,10 @@ async def handler(event):
                 await event.respond(f'👋 Assalomu alaykum, {user_id}! 😊')
             elif event.sender.language_code == 'ru':
                 await event.respond(f'👋 Здравствуйте, {user_id}! 😊')
+            else:
+                await event.respond(f'👋 Assalomu alaykum, {user_id}! 😊')
             greeted_users[user_id] = current_date
+
 
         message_text = event.message.message.lower()
         if any(banned_word in message_text for banned_word in banned_words):
