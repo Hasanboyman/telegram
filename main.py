@@ -34,10 +34,11 @@ async def handler(event):
         if any(banned_word in message_text for banned_word in banned_words):
             if event.sender.lang_code == 'en':
                 await event.respond('🚫 Please do not using inappropriate language. 🛑')
-            elif event.sender.lang_code == 'uzb':
-                await event.respond('🚫 So\'kinme gaplashaylik. 🛑')
             elif event.sender.lang_code == 'ru':
                 await event.respond('🚫 Пожалуйста, избегайте ненормативной лексики. 🛑')
+            else:
+                await event.respond('🚫 So\'kinme gaplashaylik. 🛑')
+                
 
         if event.message.text.lower().startswith('/yomon_soz_qoshish '):
             new_word = event.message.text[len('/yomon_soz_qoshish '):].strip().lower()
