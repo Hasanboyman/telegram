@@ -16,14 +16,12 @@ banned_words = ['kot', 'mol', 'garang', 'tom', 'kalanga', 'kt', 'axmoq', 'jinni'
 @client.on(events.NewMessage(incoming=True))
 async def handler(event):
     if event.is_private or event.is_channel:
-        # Combining first_name and last_name, with fallback to "User"
         user_id = f"{event.sender.first_name or ''} {event.sender.last_name or ''}".strip() or "User"
 
         current_date = datetime.now().date()
 
         last_greeted = greeted_users.get(user_id)
         if last_greeted is None or last_greeted < current_date:
-            # Check user's language (assuming 'en' means English)
             if event.sender.lang_code == 'en':
                 await event.respond(f'👋 Hello, {user_id}! 😊')
             elif event.sender.lang_code == 'uzb':
@@ -34,7 +32,12 @@ async def handler(event):
 
         message_text = event.message.message.lower()
         if any(banned_word in message_text for banned_word in banned_words):
-            await event.respond('🚫 Please avoid using inappropriate language. 🛑')
+            if event.sender.lang_code == 'en':
+                await event.respond('🚫 Please do not using inappropriate language. 🛑')
+            elif event.sender.lang_code == 'uzb':
+                await event.respond('🚫 So\'kinme gaplashaylik. 🛑')
+            elif event.sender.lang_code == 'ru':
+                await event.respond('🚫 Пожалуйста, избегайте ненормативной лексики. 🛑')
 
         if event.message.text.lower().startswith('/yomon_soz_qoshish '):
             new_word = event.message.text[len('/yomon_soz_qoshish '):].strip().lower()
