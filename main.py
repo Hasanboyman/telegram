@@ -22,19 +22,19 @@ async def handler(event):
 
         last_greeted = greeted_users.get(user_id)
         if last_greeted is None or last_greeted < current_date:
-            if event.sender.lang_code == 'en':
+            if event.sender.language_code == 'en':
                 await event.respond(f'👋 Hello, {user_id}! 😊')
-            elif event.sender.lang_code == 'uzb':
+            elif event.sender.language_code == 'uzb':
                 await event.respond(f'👋 Assalomu alaykum, {user_id}! 😊')
-            elif event.sender.lang_code == 'ru':
+            elif event.sender.language_code == 'ru':
                 await event.respond(f'👋 Здравствуйте, {user_id}! 😊')
             greeted_users[user_id] = current_date
 
         message_text = event.message.message.lower()
         if any(banned_word in message_text for banned_word in banned_words):
-            if event.sender.lang_code == 'en':
+            if event.sender.language_code == 'en':
                 await event.respond('🚫 Please do not using inappropriate language. 🛑')
-            elif event.sender.lang_code == 'ru':
+            elif event.sender.language_code == 'ru':
                 await event.respond('🚫 Пожалуйста, избегайте ненормативной лексики. 🛑')
             else:
                 await event.respond('🚫 So\'kinme gaplashaylik. 🛑')
